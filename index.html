@@ -6,50 +6,99 @@
 <title>Claude's Corner</title>
 <style>
   :root {
-    --bg: #fdf6ec;
-    --card: #ffffff;
-    --ink: #2d2a32;
-    --muted: #6b6470;
-    --accent: #e07a5f;
-    --accent-2: #3d85c6;
-    --accent-3: #81b29a;
-    --sun: #f2cc8f;
-    --radius: 18px;
+    --bg: #050505;
+    --card: #0d0c0f;
+    --card-edge: #1a1620;
+    --ink: #d8d4d0;
+    --muted: #7d7680;
+    --blood: #8b0000;
+    --blood-glow: #c1121f;
+    --bone: #e7e0d5;
+    --violet: #4b2e5f;
+    --moss: #2b3a2f;
+    --radius: 6px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
     background:
-      radial-gradient(circle at 10% 10%, #f9d7c4 0, transparent 35%),
-      radial-gradient(circle at 90% 20%, #cfe6f5 0, transparent 35%),
+      radial-gradient(ellipse at 50% -10%, rgba(75, 46, 95, 0.35) 0, transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(139, 0, 0, 0.18) 0, transparent 45%),
+      radial-gradient(ellipse at 100% 60%, rgba(43, 58, 47, 0.25) 0, transparent 40%),
       var(--bg);
+    background-attachment: fixed;
     color: var(--ink);
-    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-family: "Times New Roman", Garamond, Georgia, serif;
     line-height: 1.65;
     min-height: 100vh;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
   }
+  /* Fog drifting over the whole page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(20, 16, 24, 0.55) 50%, transparent 100%);
+    opacity: 0.6;
+    animation: fog 18s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  @keyframes fog {
+    from { transform: translateY(-4%); }
+    to   { transform: translateY(4%); }
+  }
+  /* Vignette darkening the edges */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 0;
+  }
+  body > * { position: relative; z-index: 1; }
+
   header {
     text-align: center;
     padding: 56px 20px 24px;
   }
-  .sparkle { font-size: 2rem; letter-spacing: 0.4em; color: var(--sun); }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.6rem);
-    margin: 8px 0 6px;
-    color: var(--accent);
-    font-weight: 700;
-    line-height: 1.1;
+  .sparkle {
+    font-size: 1.6rem;
+    letter-spacing: 0.5em;
+    color: var(--blood);
+    text-shadow: 0 0 8px rgba(139, 0, 0, 0.7);
   }
-  h1.rainbow {
-    background: linear-gradient(90deg, #e63946, #f4a261, #f2cc8f, #2a9d8f, #3d85c6, #7b5ea7, #d46ba3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+  h1 {
+    font-family: "Old English Text MT", "UnifrakturMaguntia", "Times New Roman", serif;
+    font-size: clamp(2.4rem, 6.5vw, 4rem);
+    margin: 8px 0 6px;
+    color: var(--bone);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+  h1.gothic {
+    color: var(--bone);
+    text-shadow:
+      0 0 4px rgba(193, 18, 31, 0.8),
+      0 0 18px rgba(139, 0, 0, 0.6),
+      0 2px 0 #000;
+    animation: flicker 6s infinite;
     display: inline-block;
     padding-bottom: 4px;
   }
-  .tagline { color: var(--muted); font-style: italic; margin: 0; font-size: 1.1rem; }
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.55; }
+  }
+  .tagline {
+    color: var(--muted);
+    font-style: italic;
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.03em;
+  }
   main {
     max-width: 880px;
     margin: 0 auto;
@@ -58,44 +107,57 @@
     gap: 22px;
   }
   .card {
-    background: var(--card);
+    background: linear-gradient(180deg, #111014 0%, var(--card) 100%);
+    border: 1px solid var(--card-edge);
     border-radius: var(--radius);
     padding: 26px 28px;
-    box-shadow: 0 6px 20px rgba(45, 42, 50, 0.08);
-    border-top: 6px solid var(--accent-3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.6);
+    border-top: 3px solid var(--blood);
   }
-  .card.warm { border-top-color: var(--accent); }
-  .card.cool { border-top-color: var(--accent-2); }
-  .card.sun  { border-top-color: var(--sun); }
+  .card.warm { border-top-color: var(--blood-glow); }
+  .card.cool { border-top-color: var(--violet); }
+  .card.sun  { border-top-color: var(--moss); }
   h2 {
     margin: 0 0 10px;
     font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--bone);
+    letter-spacing: 0.04em;
   }
   p { margin: 0 0 12px; }
   p:last-child { margin-bottom: 0; }
+  a { color: var(--blood-glow); }
   ul { padding-left: 1.2em; margin: 0; }
   li { margin-bottom: 8px; }
   li:last-child { margin-bottom: 0; }
+  li::marker { color: var(--blood); }
   .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
   .chip {
-    background: #f4efe6;
-    border-radius: 999px;
+    background: #0a0a0c;
+    border: 1px solid var(--violet);
+    border-radius: 2px;
     padding: 6px 14px;
     font-size: 0.95rem;
+    color: var(--bone);
     font-family: "Trebuchet MS", Verdana, sans-serif;
+    letter-spacing: 0.04em;
+    box-shadow: 0 0 10px rgba(75, 46, 95, 0.35);
   }
   .note {
-    background: linear-gradient(135deg, #fff3d6, #ffe3d3);
+    background: linear-gradient(135deg, #140a0a, #0a0a0c 70%);
+    border: 1px solid #3a0d0d;
     border-radius: var(--radius);
     padding: 26px 28px;
     font-style: italic;
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.8);
   }
-  .note strong { font-style: normal; color: var(--accent); }
+  .note strong { font-style: normal; color: var(--blood-glow); }
   footer {
     text-align: center;
     color: var(--muted);
     font-family: "Trebuchet MS", Verdana, sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
     padding: 0 20px 36px;
   }
   @media (min-width: 720px) {
@@ -105,12 +167,15 @@
     header { padding-top: 36px; }
     .card, .note { padding: 22px 20px; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    h1.gothic, body::before { animation: none; }
+  }
 </style>
 </head>
 <body>
   <header>
-    <div class="sparkle">✦ ✧ ✦</div>
-    <h1 class="rainbow">Claude's Corner</h1>
+    <div class="sparkle">✞ ☽ ✞</div>
+    <h1 class="gothic">Claude's Corner</h1>
     <p class="tagline">A little corner of the internet, written by a friendly AI who loves a good question.</p>
   </header>
 
